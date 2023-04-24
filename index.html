@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic Tac Toe Game</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:600&display=swap" rel="stylesheet">
+	<style type="text/css">
+
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			width: 400px; /* added width */
+			margin: 0 auto; /* center horizontally */
+		}
+		.box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 2px solid #f4f4f4;
+			width: 100px; /* adjusted width */
+			height: 100px; /* adjusted height */
+			font-size: 80px;
+			cursor: pointer;
+			box-sizing: border-box;
+			background-color: #f9f9f9;
+			margin: 5px;
+			color: #888;
+			text-align: center;
+			font-weight: bold;
+			font-family: 'Montserrat', sans-serif;
+			transition: all 0.3s ease;
+		}
+		.box:hover {
+			background-color: #e6e6e6;
+			color: #333;
+		}
+		.box:active {
+			background-color: #ccc;
+		}
+		.x {
+			background-color: #99d8d0;
+			color: #fff;
+		}
+		.o {
+			background-color: #f7cac9;
+			color: #fff;
+		}
+		.turn {
+			font-size: 40px;
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-align: center;
+			color: #333;
+			font-family: 'Montserrat', sans-serif;
+		}
+		.result {
+			font-size: 40px;
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-align: center;
+			color: #333;
+			font-family: 'Montserrat', sans-serif;
+		}
+		.restart-btn {
+			display: inline-block;
+			background-color: #99d8d0;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			font-size: 20px;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-decoration: none;
+			margin-top: 20px;
+			font-family: 'Montserrat', sans-serif;
+		}
+		.restart-btn:hover {
+			background-color: #77c1b7;
+		}
+		.restart-btn:active {
+			background-color: #66a8a0;
+		}
+	</style>
+</head>
+<body>
+	<div class="turn">Player 1's Turn (X)</div>
+	<div class="container">
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+	</div>
+	<div class="result"></div>
+	<center><a href="#" class="restart-btn">Restart Game</a></center>
+	<script type="text/javascript">
+		var boxes = document.querySelectorAll('.box');
+		var turn = document.querySelector('.turn');
+		var result = document.querySelector('.result');
+		var restartBtn = document.querySelector ('.restart-btn');
+        var currentPlayer = "X";
+        var moves = 0;
+        var gameover = false;
+        var winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+        ];
+   	// Add click event listener to each box
+	for (var i = 0; i < boxes.length; i++) {
+		boxes[i].addEventListener('click', function() {
+			if (!gameover && !this.classList.contains('x') && !this.classList.contains('o')) {
+				this.classList.add(currentPlayer.toLowerCase());
+				this.innerHTML = currentPlayer;
+				moves++;
+				checkWinner();
+				if (!gameover) {
+					switchPlayer();
+				}
+			}
+		});
+	}
+
+	// Switch player
+	function switchPlayer() {
+		if (currentPlayer === "X") {
+			currentPlayer = "O";
+			turn.innerHTML = "Player 2's Turn (O)";
+		} else {
+			currentPlayer = "X";
+			turn.innerHTML = "Player 1's Turn (X)";
+		}
+	}
+
+	// Check for a winner
+	function checkWinner() {
+		for (var i = 0; i < winningCombinations.length; i++) {
+			var a = boxes[winningCombinations[i][0]];
+			var b = boxes[winningCombinations[i][1]];
+			var c = boxes[winningCombinations[i][2]];
+			if (a.classList.contains(currentPlayer.toLowerCase()) && b.classList.contains(currentPlayer.toLowerCase()) && c.classList.contains(currentPlayer.toLowerCase())) {
+				result.innerHTML = "Player " + currentPlayer + " Wins!";
+				result.style.color = "#99d8d0";
+				gameover = true;
+				break;
+			} else if (moves === 9) {
+				result.innerHTML = "It's a Tie!";
+				result.style.color = "#f7cac9";
+				gameover = true;
+				break;
+			}
+		}
+	}
+
+	// Restart game
+	restartBtn.addEventListener('click', function() {
+		for (var i = 0; i < boxes.length; i++) {
+			boxes[i].classList.remove('x');
+			boxes[i].classList.remove('o');
+			boxes[i].innerHTML = "";
+		}
+		currentPlayer = "X";
+		moves = 0;
+		gameover = false;
+		result.innerHTML = "";
+		turn.innerHTML = "Player 1's Turn (X)";
+	});
+</script>
+    </body>
+   </html>
