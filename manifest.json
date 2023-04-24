@@ -8,14 +8,11 @@
         "type": "image/png"
       }
     ],
-    "theme_color": "#99d8d0",
-    "background_color": "#f9f9f9",
-    "display": "standalone"
-      }],
-    "lang": "en-US",
+   
+   "lang": "en-US",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "white",
-  "theme_color": "white"
-  }
+   "theme_color": "#99d8d0",
+   "background_color": "#f9f9f9",
+ }
   
